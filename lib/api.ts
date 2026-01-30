@@ -1,0 +1,205 @@
+import {
+    User, Product, ProductListParams, ApiResponse,
+    SiteSettings, BalanceHistory, Order, Bank, BankResponse, ProductComment,
+    CronJob, CronServer, CronLog, CronResponse,
+    VpsCategory, VpsProduct, VpsConfig
+} from "./api-types";
+
+// Base URL handling
+// When using Next.js Rewrites, we can use relative paths for client-side fetches
+// This ensures cookies are passed correctly to the same domain (localhost:3000 -> proxy -> localhost:80)
+const API_URL = typeof window !== 'undefined' ? '/api' : 'https://cmsbvq.top/api';
+
+type RequestOptions = RequestInit & {
+    params?: Record<string, string | number | undefined>;
+};
+
+async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
+    const { params, ...init } = options;
+
+    // Build URL with query params
+    const urlString = endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`;
+    // If urlString is relative (starts with /), new URL() requires a base.
+    // On client, use window.location.origin. On server, API_URL is absolute so it's fine.
+    const base = typeof window !== 'undefined' ? window.location.origin : undefined;
+    const url = new URL(urlString, base);
+
+    if (params) {
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined) {
+                url.searchParams.append(key, String(value));
+            }
+        });
+    }
+
+    // Default headers
+    const headers = new Headers(init.headers);
+    if (!headers.has('Content-Type') && !(init.body instanceof FormData)) {
+        headers.set('Content-Type', 'application/json');
+    }
+
+    // Make request (include credentials for cookies/session)
+    const res = await fetch(url.toString(), {
+        ...init,
+        headers,
+        credentials: 'include', // Important for PHP sessions
+    });
+
+    // if (!res.ok) {
+    //     throw new Error(`API Error: ${res.statusText}`);
+    // }
+
+    // Handle different response types (some might be void or text)
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+        return res.json();
+    }
+    return res.text() as unknown as T;
+}
+
+export const api = {
+    auth: {
+        login: (data: any) => fetcher<ApiResponse<{ user: User }>>('/auth/login.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }),
+        register: (data: any) => fetcher<ApiResponse<void>>('/auth/register.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }),
+        me: () => fetcher<ApiResponse<{ user: User }>>('/auth/me.php'),
+        logout: () => fetcher<ApiResponse<void>>('/auth/logout.php'),
+    },
+    products: {
+        list: (params: Partial<ProductListParams>) => fetcher<ApiResponse<Product[]> | Product[]>('/products.php', {
+            params: { action: 'list', ...params } as any
+        }),
+        get: (slugOrId: string | number) => {
+            const isId = !isNaN(Number(slugOrId));
+            return fetcher<ApiResponse<Product> | Product>('/products.php', {
+                params: {
+                    action: 'detail',
+                    [isId ? 'id' : 'slug']: slugOrId.toString()
+                }
+            });
+        },
+        getRelated: (id: string | number) => fetcher<ApiResponse<Product[]> | Product[]>('/products.php', {
+            params: { action: 'list', filter: 'all', limit: 4 } // Fallback logic for related
+        }),
+    },
+    general: {
+        settings: () => fetcher<ApiResponse<SiteSettings>>('/settings.php'),
+        categories: () => fetcher<ApiResponse<unknown>>('/categories.php'),
+    },
+    user: {
+        buy: (id: number) => fetcher<ApiResponse<void>>('/buy.php', {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+        }),
+        history: () => fetcher<ApiResponse<Order[]>>('/history.php'),
+        balanceHistory: () => fetcher<ApiResponse<BalanceHistory[]>>('/balance-history.php'),
+    },
+    payment: {
+        banks: () => fetcher<BankResponse>('/bank.php'),
+        getFees: (type_card: string) => {
+            const body = new URLSearchParams();
+            body.append('type_card', type_card);
+            return fetcher<string>('/amount.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        }
+    },
+    comments: {
+        list: (product_id: number | string) => fetcher<ApiResponse<ProductComment[]>>('/comments.php', {
+            params: { action: 'list', product_id: product_id.toString() }
+        }),
+        create: (data: { product_id: number | string; content: string; parent_id?: number | string }) => {
+            const body = new URLSearchParams();
+            body.append('product_id', data.product_id.toString());
+            body.append('content', data.content);
+            body.append('parent_id', (data.parent_id || 0).toString());
+
+            return fetcher<ApiResponse<void>>('/comments.php', {
+                method: 'POST',
+                params: { action: 'create' },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        }
+    },
+    cron: {
+        list: () => fetcher<ApiResponse<CronJob[]>>('/cron/index.php'),
+        add: (data: any) => {
+            const body = new URLSearchParams();
+            Object.entries(data).forEach(([key, value]) => body.append(key, String(value)));
+            return fetcher<ApiResponse<void>>('/cron/add.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        edit: (data: any) => {
+            const body = new URLSearchParams();
+            Object.entries(data).forEach(([key, value]) => body.append(key, String(value)));
+            return fetcher<ApiResponse<void>>('/cron/edit.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        delete: (id: number) => {
+            const body = new URLSearchParams();
+            body.append('id', id.toString());
+            return fetcher<ApiResponse<void>>('/cron/delete.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        toggle: (id: number) => {
+            const body = new URLSearchParams();
+            body.append('id', id.toString());
+            return fetcher<ApiResponse<void>>('/cron/toggle.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        renew: (id: number, months: number) => {
+            const body = new URLSearchParams();
+            body.append('id', id.toString());
+            body.append('months', months.toString());
+            return fetcher<ApiResponse<void>>('/cron/renew.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        run: (id: number) => {
+            const body = new URLSearchParams();
+            body.append('id', id.toString());
+            return fetcher<ApiResponse<void>>('/cron/run.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+        },
+        logs: (id: number) => fetcher<ApiResponse<CronLog[]>>('/cron/logs.php', {
+            params: { id: id.toString() }
+        }),
+        servers: () => fetcher<ApiResponse<CronServer[]>>('/cron/servers.php'),
+    },
+    vps: {
+        categories: () => fetcher<ApiResponse<VpsCategory[]>>('/vps/categories.php'),
+        products: (category_id?: number, id?: number) => fetcher<ApiResponse<VpsProduct[]>>('/vps/products.php', {
+            params: { category_id, id }
+        }),
+        config: () => fetcher<ApiResponse<VpsConfig>>('/vps/config.php'),
+        buy: (data: { id: number; os: string; location: string; note?: string }) => fetcher<ApiResponse<void>>('/vps/buy.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }),
+    }
+};
