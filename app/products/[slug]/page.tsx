@@ -20,32 +20,65 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cmsbvq.com";
+
   try {
     const res = await api.products.get(slug);
     const product = (res as any).data || res;
-    const image =
-      product.images?.[0] ||
-      product.image ||
-      product.list_images?.[0];
+
+    // Get product image
+    let productImage = product.images?.[0] || product.image || product.list_images?.[0];
+
+    // Convert to full URL if needed
+    if (productImage && !productImage.startsWith('http')) {
+      productImage = `https://cmsbvq.top${productImage}`;
+    }
+
+    // Fallback to default OG image
+    const ogImage = productImage || `${siteUrl}/og-image.png`;
+
+    const title = `${product.name} - CMSBVQ.COM`;
+    const description = product.description || product.content || `Mua ${product.name} chất lượng cao tại CMSBVQ.COM`;
 
     return {
-      title: `${product.name} - CMSBVQ.COM`,
-      description: product.description || product.content,
-      openGraph: {
-        title: product.name,
-        description: product.description || product.content,
-        images: image ? [image] : [],
+      title,
+      description,
 
+      keywords: `${product.name}, mua source code, ${product.category_name || 'code marketplace'}`,
+
+      openGraph: {
+        type: 'website',
+        locale: 'vi_VN',
+        url: `${siteUrl}/products/${slug}`,
+        siteName: 'CMSBVQ.COM',
+        title,
+        description,
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: product.name,
+          },
+        ],
       },
 
       twitter: {
         card: "summary_large_image",
-        images: image ? [image] : [],
+        title,
+        description,
+        images: [ogImage],
+        creator: '@cmsbvq',
+      },
+
+      alternates: {
+        canonical: `${siteUrl}/products/${slug}`,
       },
     };
   } catch (error) {
     return {
       title: "Product Not Found - CMSBVQ.COM",
+      description: "Sản phẩm không tồn tại hoặc đã bị xóa",
     };
   }
 }
