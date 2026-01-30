@@ -6,9 +6,8 @@ import {
 } from "./api-types";
 
 // Base URL handling
-// When using Next.js Rewrites, we can use relative paths for client-side fetches
-// This ensures cookies are passed correctly to the same domain (localhost:3000 -> proxy -> localhost:80)
-const API_URL = typeof window !== 'undefined' ? '/api' : 'https://cmsbvq.top/api';
+// Always use cmsbvq.top for API calls (backend is on separate server)
+const API_URL = 'https://cmsbvq.top/api';
 
 type RequestOptions = RequestInit & {
     params?: Record<string, string | number | undefined>;
