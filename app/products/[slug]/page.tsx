@@ -86,8 +86,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  // We can pre-fetch data here if we want to avoid loading states completely
-  // For now, we'll let the client component handle the fetch or pass initial data
+  // Pre-fetch data for JSON-LD and initial state
   let initialProduct = null;
   try {
     const res = await api.products.get(slug);
@@ -96,6 +95,30 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     // Error handled in client component
   }
 
-  return <ProductDetailClient slug={slug} initialProduct={initialProduct} />;
+  const jsonLd = initialProduct ? {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: initialProduct.name,
+    image: initialProduct.image || initialProduct.images?.[0],
+    description: initialProduct.description || initialProduct.content,
+    offers: {
+      '@type': 'Offer',
+      price: initialProduct.price,
+      priceCurrency: 'VND',
+      availability: 'https://schema.org/InStock',
+    }
+  } : null;
+
+  return (
+    <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <ProductDetailClient slug={slug} initialProduct={initialProduct} />
+    </>
+  );
 }
 
