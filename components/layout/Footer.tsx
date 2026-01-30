@@ -95,22 +95,6 @@ export function Footer() {
                         <ul className="space-y-3">
                             <li>
                                 <Link
-                                    href="/huong-dan-su-dung"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Hướng dẫn sử dụng
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/gioi-thieu"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Giới thiệu
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
                                     href="/chinh-sach-bao-mat"
                                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                                 >
@@ -140,30 +124,6 @@ export function Footer() {
                                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                                 >
                                     Thuê VPS
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/services/hosting"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Thuê Hosting
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/services/domain"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Đăng ký tên miền
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/services/support"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Hướng dẫn
                                 </Link>
                             </li>
                         </ul>

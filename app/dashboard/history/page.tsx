@@ -85,7 +85,7 @@ export default function HistoryPage() {
                                         </span>
                                     </TableCell>
                                     <TableCell className="text-muted-foreground text-sm">
-                                        {order.created_at}
+                                        {order.created_at || order.create_date}
                                     </TableCell>
 
                                     <TableCell className="text-right">
@@ -119,7 +119,7 @@ export default function HistoryPage() {
                     </TableBody>
                 </Table>
             </div>
-        </div>
+        </div >
     );
 }
 

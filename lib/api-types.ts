@@ -108,6 +108,7 @@ export interface Order {
     total_price: number;
     status: string;
     created_at: string;
+    create_date?: string;
     product_name: string;
     link_download?: string;
 }
