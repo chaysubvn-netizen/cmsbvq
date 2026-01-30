@@ -1,0 +1,33 @@
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CMSBVQ.COM",
+    "description": "Chuyên thiết kế website Bán Code, Mã nguồn chất lượng cao",
+    "url": "https://cmsbvq.com",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://cmsbvq.com/products?keyword={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "CMSBVQ.COM",
+        "url": "https://cmsbvq.com",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://cmsbvq.com/logo.png"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+84-395-046-244",
+            "contactType": "Customer Service",
+            "availableLanguage": [
+                "Vietnamese"
+            ]
+        },
+        "sameAs": [
+            "https://zalo.me/0395046244",
+            "https://t.me/hackliketop2"
+        ]
+    }
+}
