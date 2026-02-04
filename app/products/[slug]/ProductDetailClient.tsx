@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { ShoppingCart, ExternalLink, ShieldCheck, Loader2, Check, Zap, Server, Star } from "lucide-react";
+import { ShoppingCart, ExternalLink, ShieldCheck, Loader2, Check, Zap, Server, Star, Maximize2 } from "lucide-react";
 import { getImageUrl, formatPrice } from "@/lib/image-helper";
 import CommentSection from "@/components/product/CommentSection";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface ProductDetailClientProps {
     slug: string;
@@ -88,13 +89,29 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
                                 </div>
                             </div>
 
-                            <div className="aspect-video w-full overflow-hidden">
-                                <img
-                                    src={getImageUrl(product.image as string)}
-                                    alt={product.name}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                />
-                            </div>
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <div className="aspect-video w-full overflow-hidden cursor-zoom-in relative">
+                                        <img
+                                            src={getImageUrl(product.image as string)}
+                                            alt={product.name}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-full">
+                                                <Maximize2 className="w-6 h-6 text-white" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-7xl border-none bg-transparent p-0 shadow-none overflow-hidden flex items-center justify-center">
+                                    <img
+                                        src={getImageUrl(product.image as string)}
+                                        alt={product.name}
+                                        className="max-w-full max-h-[90vh] object-contain rounded-xl"
+                                    />
+                                </DialogContent>
+                            </Dialog>
                         </div>
 
                         {/* Description Section */}

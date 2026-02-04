@@ -64,9 +64,34 @@ async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promi
             if (!textBlob || textBlob.trim() === '') {
                 return {} as T;
             }
-            return JSON.parse(textBlob);
+
+            // SANITIZATION: Backend might echo extra characters after JSON
+            // Find the first '{' or '[' and the last '}' or ']'
+            let sanitized = textBlob.trim();
+            const firstBrace = sanitized.indexOf('{');
+            const firstBracket = sanitized.indexOf('[');
+            const lastBrace = sanitized.lastIndexOf('}');
+            const lastBracket = sanitized.lastIndexOf(']');
+
+            let start = -1;
+            let end = -1;
+
+            if (firstBrace !== -1 && (firstBracket === -1 || firstBrace < firstBracket)) {
+                start = firstBrace;
+                end = lastBrace;
+            } else if (firstBracket !== -1) {
+                start = firstBracket;
+                end = lastBracket;
+            }
+
+            if (start !== -1 && end !== -1 && end > start) {
+                sanitized = sanitized.substring(start, end + 1);
+            }
+
+            return JSON.parse(sanitized);
         } catch (e) {
             console.error('Không thể phân tích phản hồi JSON:', textBlob);
+            // Fallback: try to return default structured data if it's a known endpoint
             return textBlob as unknown as T;
         }
     }

@@ -29,21 +29,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const res = await api.products.get(slug);
     const product = (res as any).data || res;
 
+    if (!product || !product.name) {
+      throw new Error("Product data incomplete");
+    }
+
     // Get product images (could be string, array, or CSV)
     const rawImage = product.image || product.images || product.list_images;
     const ogImage = getImageUrl(rawImage);
 
     const title = `${product.name} - CMSBVQ.COM`;
-    const description = product.description || product.content || `Mua ${product.name} chất lượng cao tại CMSBVQ.COM`;
+    const description = (product.description || product.mota_ngan || product.content || `Mua ${product.name} chất lượng cao, mã nguồn sạch, hỗ trợ cài đặt tại CMSBVQ.COM`).replace(/<[^>]*>/g, '').substring(0, 160);
 
     return {
+      metadataBase: new URL(siteUrl),
       title,
       description,
-
-      keywords: `${product.name}, mua source code, ${product.category_name || 'code marketplace'}`,
+      keywords: `${product.name}, mua source code, ${product.category_name || 'code marketplace'}, cmsbvq`,
 
       openGraph: {
-        type: 'website',
+        type: 'article',
         locale: 'vi_VN',
         url: `${siteUrl}/products/${slug}`,
         siteName: 'CMSBVQ.COM',
@@ -64,17 +68,29 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title,
         description,
         images: [ogImage],
+        site: '@cmsbvq',
         creator: '@cmsbvq',
       },
 
       alternates: {
         canonical: `${siteUrl}/products/${slug}`,
       },
+
+      robots: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+      }
     };
   } catch (error) {
+    console.error("Metadata generation error for slug:", slug, error);
     return {
-      title: "Product Not Found - CMSBVQ.COM",
-      description: "Sản phẩm không tồn tại hoặc đã bị xóa",
+      metadataBase: new URL(siteUrl),
+      title: "Sản phẩm không tồn tại - CMSBVQ.COM",
+      description: "Xem các mã nguồn chất lượng cao khác tại CMSBVQ.COM",
+      openGraph: {
+        images: [`${siteUrl}/og-image.png`]
+      }
     };
   }
 }
