@@ -107,7 +107,7 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
                             </div>
                             <div className="bg-[#0f1115] border border-white/5 rounded-xl p-6 text-slate-300 leading-relaxed">
                                 <div dangerouslySetInnerHTML={{
-                                    __html: (product.description || product.content || product.intro || (product as any).noidung || (product as any).detail || (product as any).mota || "") as string
+                                    __html: (product.description || product.intro || product.short_description || product.content || (product as any).noidung || (product as any).detail || (product as any).mota || "Chưa có mô tả cho sản phẩm này.") as string
                                 }} />
                             </div>
                         </div>

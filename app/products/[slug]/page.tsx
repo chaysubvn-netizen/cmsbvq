@@ -4,6 +4,8 @@ import ProductDetailClient from "./ProductDetailClient";
 import { use } from "react";
 
 // Required for static export
+export const revalidate = 60; // Revalidate at most every 60 seconds
+
 export async function generateStaticParams() {
   try {
     const res = await api.products.list({ limit: 100 });

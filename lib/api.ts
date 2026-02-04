@@ -17,7 +17,7 @@ async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promi
     const { params, ...init } = options;
 
     // Build URL with query params
-    const urlString = endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`;
+    const urlString = endpoint.startsWith('https') ? endpoint : `${API_URL}${endpoint}`;
     // If urlString is relative (starts with /), new URL() requires a base.
     // On client, use window.location.origin. On server, API_URL is absolute so it's fine.
     const base = typeof window !== 'undefined' ? window.location.origin : undefined;
@@ -44,16 +44,34 @@ async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promi
         credentials: 'include', // Important for PHP sessions
     });
 
-    // if (!res.ok) {
-    //     throw new Error(`API Error: ${res.statusText}`);
-    // }
+    if (!res.ok) {
+        let errorMsg = `API Error: ${res.status} ${res.statusText}`;
+        try {
+            const errorData = await res.json();
+            errorMsg = errorData.msg || errorData.message || errorMsg;
+        } catch (e) {
+            // If it's not JSON, just use the status text
+        }
+        throw new Error(errorMsg);
+    }
 
     // Handle different response types (some might be void or text)
     const contentType = res.headers.get('content-type');
+    const textBlob = await res.text();
+
     if (contentType && contentType.includes('application/json')) {
-        return res.json();
+        try {
+            if (!textBlob || textBlob.trim() === '') {
+                return {} as T;
+            }
+            return JSON.parse(textBlob);
+        } catch (e) {
+            console.error('Failed to parse JSON response:', textBlob);
+            return textBlob as unknown as T;
+        }
     }
-    return res.text() as unknown as T;
+
+    return textBlob as unknown as T;
 }
 
 export const api = {

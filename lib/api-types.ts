@@ -34,28 +34,35 @@ export interface Product {
     id: number | string;
     name: string;
     slug: string;
-    description: string;
-    content?: string; // Optional as intro might be used
-    intro?: string; // Backend has intro
+    description?: string; // Long description
+    content?: string; // Content field
+    intro?: string; // Introduction / Main content
     price: number | string;
-    old_price?: number | string; // Backend might not send this
-    views: number | string; // Normalized
-    view?: number | string; // Backend field
+    old_price?: number | string;
+    views: number | string;
+    view?: number | string;
     sold: number | string;
     category_id?: number | string;
     user_id?: number | string;
-    image: string; // We will map 'images' to this or use 'images'
-    images: string | string[]; // Backend 'images' can be string path or list? Backend sent 'images': 'path'
-    list_images?: string; // Backend specific
+    image: string;
+    images: string | string[];
+    list_images?: string;
     created_at?: string;
     updated_at?: string;
-    update_date?: string; // Backend field
-    username?: string; // seller name
+    update_date?: string;
+    username?: string;
     category_name?: string;
-    sale?: number | string; // Backend 'sale'
+    sale?: number | string;
     type?: string;
     link_download?: string;
+    link_down?: string;
     link_demo?: string;
+    short_description?: string;
+    mota?: string;
+    noidung?: string;
+    detail?: string;
+    form_config?: any;
+    status?: string | number;
 }
 
 export interface Category {
