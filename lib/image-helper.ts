@@ -17,7 +17,13 @@ export function getImageUrl(path: string | string[] | null | undefined) {
     const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
 
     // Backend is on cmsbvq.top
-    return `https://cmsbvq.top${normalizedPath}`;
+    // If the path already contains a directory structure (like /upload/ or /assets/), use it as is
+    if (normalizedPath.toLowerCase().includes('/upload/') || normalizedPath.split('/').length > 2) {
+        return `https://cmsbvq.top${normalizedPath}`;
+    }
+
+    // Otherwise, assume it's a product image and prefix with the requested directory
+    return `https://cmsbvq.top/upload/product${normalizedPath}`;
 }
 
 export function formatPrice(price: number) {
