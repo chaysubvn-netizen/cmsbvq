@@ -104,11 +104,11 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
                                         </div>
                                     </div>
                                 </DialogTrigger>
-                                <DialogContent className="max-w-7xl border-none bg-transparent p-0 shadow-none overflow-hidden flex items-center justify-center">
+                                <DialogContent className="max-w-screen-xl w-[95vw] border-none bg-transparent p-0 shadow-none overflow-hidden flex items-center justify-center sm:max-w-none">
                                     <img
                                         src={getImageUrl(product.image as string)}
                                         alt={product.name}
-                                        className="max-w-full max-h-[90vh] object-contain rounded-xl"
+                                        className="w-full h-auto max-h-[90vh] object-contain rounded-xl"
                                     />
                                 </DialogContent>
                             </Dialog>
