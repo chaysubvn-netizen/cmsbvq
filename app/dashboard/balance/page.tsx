@@ -39,19 +39,19 @@ export default function BalanceHistoryPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-white mb-2">Deposit History</h1>
-                <p className="text-muted-foreground">List of your bank transfer deposits.</p>
+                <h1 className="text-2xl font-bold text-white mb-2">Lịch sử nạp tiền</h1>
+                <p className="text-muted-foreground">Danh sách các giao dịch nạp tiền qua ngân hàng của bạn.</p>
             </div>
 
             <div className="bg-black/40 border border-white/10 rounded-2xl overflow-hidden">
                 <Table>
                     <TableHeader className="bg-white/5">
                         <TableRow className="border-white/5 hover:bg-transparent">
-                            <TableHead className="text-white">Time</TableHead>
-                            <TableHead className="text-white">Method</TableHead>
-                            <TableHead className="text-white">Transaction ID</TableHead>
-                            <TableHead className="text-white">Amount</TableHead>
-                            <TableHead className="text-white">Content/Comment</TableHead>
+                            <TableHead className="text-white">Thời gian</TableHead>
+                            <TableHead className="text-white">Phương thức</TableHead>
+                            <TableHead className="text-white">Mã giao dịch</TableHead>
+                            <TableHead className="text-white">Số tiền</TableHead>
+                            <TableHead className="text-white">Nội dung/Ghi chú</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -88,7 +88,7 @@ export default function BalanceHistoryPage() {
                                 <TableCell colSpan={5} className="h-48 text-center text-muted-foreground">
                                     <div className="flex flex-col items-center gap-2">
                                         <Wallet className="w-8 h-8 opacity-20" />
-                                        <p>No deposit history found.</p>
+                                        <p>Không tìm thấy lịch sử nạp tiền.</p>
                                     </div>
                                 </TableCell>
                             </TableRow>

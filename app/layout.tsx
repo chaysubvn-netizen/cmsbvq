@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingChat } from "@/components/FloatingChat";
 import { Toaster } from "@/components/ui/sonner";
+import { getImageUrl } from "@/lib/image-helper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const title = settings.title || "CMSBVQ.COM - Chuyên thiết kế website Bán Code, Mã nguồn chất lượng cao";
     const description = settings.description || settings.mota || "Chúng tôi cung cấp kho mã nguồn chất lượng cao, hạ tầng Cloud ổn định và các công cụ hỗ trợ để giúp dự án của bạn vận hành mạnh mẽ nhất.";
     const keywords = settings.keywords || settings.tukhoa || "mua bán source code, mã nguồn website, code marketplace, vps vietnam, cloud hosting, source code chất lượng";
-    const logo = settings.logo || `${siteUrl}/logo.png`;
-    const ogImage = settings.og_image || logo;
+    const logo = getImageUrl(settings.logo) || `${siteUrl}/logo.png`;
+    const ogImage = getImageUrl(settings.og_image || settings.logo) || `${siteUrl}/og-image.png`;
 
     return {
       metadataBase: new URL(siteUrl),

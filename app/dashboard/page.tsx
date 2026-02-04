@@ -32,7 +32,7 @@ export default function DashboardPage() {
         <Skeleton className="h-64 w-full bg-white/10 rounded-2xl" />
     </div>;
 
-    if (!user) return <div>Please login to view dashboard.</div>;
+    if (!user) return <div>Vui lòng đăng nhập để xem bảng điều khiển.</div>;
 
     return (
         <div className="space-y-6">
@@ -46,7 +46,7 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-center md:justify-start gap-3">
                         <h1 className="text-3xl font-bold text-white">{user.username}</h1>
                         <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                            {user.role || 'Member'}
+                            {user.role === 'admin' ? 'Quản trị viên' : 'Thành viên'}
                         </Badge>
                     </div>
                     <div className="flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
@@ -56,12 +56,12 @@ export default function DashboardPage() {
                         </div>
                         <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
-                            Joined {user.created_at || user.create_date || 'Recently'}
+                            Tham gia: {user.created_at || user.create_date || 'Gần đây'}
                         </div>
                     </div>
                 </div>
                 <div className="bg-black/40 p-4 rounded-xl border border-white/10 min-w-[200px] text-center">
-                    <span className="text-sm text-muted-foreground block mb-1">Current Balance</span>
+                    <span className="text-sm text-muted-foreground block mb-1">Số dư hiện tại</span>
                     <span className="text-2xl font-bold text-green-400">
                         {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(user.balance || 0))}
                     </span>
@@ -72,22 +72,22 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Card className="bg-black/20 border-white/5">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Total Spent</CardTitle>
+                        <CardTitle className="text-sm font-medium">Tổng chi tiêu</CardTitle>
                         <Wallet className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">0 ₫</div>
-                        <p className="text-xs text-muted-foreground">Lifetime transaction value</p>
+                        <p className="text-xs text-muted-foreground">Giá trị giao dịch trọn đời</p>
                     </CardContent>
                 </Card>
                 <Card className="bg-black/20 border-white/5">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Account Status</CardTitle>
+                        <CardTitle className="text-sm font-medium">Trạng thái tài khoản</CardTitle>
                         <Shield className="h-4 w-4 text-green-500" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-green-500">Active</div>
-                        <p className="text-xs text-muted-foreground">No restrictions</p>
+                        <div className="text-2xl font-bold text-green-500">Đang hoạt động</div>
+                        <p className="text-xs text-muted-foreground">Không có hạn chế</p>
                     </CardContent>
                 </Card>
                 {/* Add more cards as needed */}

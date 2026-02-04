@@ -54,7 +54,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md border-white/10 bg-background/80 backdrop-blur-xl shadow-xl">
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-3xl font-bold tracking-tight">
-            Welcome back 
+            Chào mừng trở lại
           </CardTitle>
           <CardDescription>
             Đăng nhập để tiếp tục sử dụng hệ thống
@@ -62,16 +62,16 @@ export default function LoginPage() {
         </CardHeader>
 
         <form onSubmit={handleLogin}>
-        <CardContent className="space-y-6 pb-6">
+          <CardContent className="space-y-6 pb-6">
 
             {/* Username */}
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">Tên đăng nhập</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="username"
-                  placeholder="Nhập username"
+                  placeholder="Nhập tên đăng nhập"
                   className="pl-9"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -83,7 +83,7 @@ export default function LoginPage() {
             {/* Password */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Mật khẩu</Label>
                 <Link
                   href="#"
                   className="text-xs text-primary hover:underline"

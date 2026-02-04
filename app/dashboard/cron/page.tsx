@@ -148,7 +148,7 @@ export default function MyCronjobsPage() {
                                 <TableHead className="text-slate-400">Tiến trình</TableHead>
                                 <TableHead className="text-slate-400">Chu kỳ</TableHead>
                                 <TableHead className="text-slate-400">Lần chạy cuối</TableHead>
-                                 <TableHead className="text-slate-400">Thời gian</TableHead>  
+                                <TableHead className="text-slate-400">Thời gian</TableHead>
                                 <TableHead className="text-slate-400">Hết hạn</TableHead>
                                 <TableHead className="text-slate-400 text-center">Trạng thái</TableHead>
                                 <TableHead className="text-slate-400 text-right">Thao tác</TableHead>
@@ -168,7 +168,7 @@ export default function MyCronjobsPage() {
                                             <span className="text-white font-medium flex items-center gap-2">
                                                 <Globe className="w-3 h-3 text-slate-500" /> {job.url}
                                             </span>
-                                            <span className="text-xs text-slate-500">ID: #{job.id} • {job.method}</span>
+                                            <span className="text-xs text-slate-500">ID: #{job.id} • Phương thức: {job.method}</span>
                                         </div>
                                     </TableCell>
                                     <TableCell>
@@ -179,7 +179,7 @@ export default function MyCronjobsPage() {
                                     <TableCell className="text-slate-400 text-xs">
                                         {job.last_run ? format(new Date(job.last_run), 'HH:mm dd/MM') : 'N/A'}
                                     </TableCell>
-                                      <TableCell className="text-slate-400 text-xs">
+                                    <TableCell className="text-slate-400 text-xs">
                                         {format(new Date(job.created_at), 'dd/MM/yyyy')}
                                     </TableCell>
                                     <TableCell className="text-slate-400 text-xs">

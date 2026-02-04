@@ -14,7 +14,7 @@ export function Footer() {
                 const sData = res.data || res;
                 setSettings(sData);
             })
-            .catch((err) => console.error('Failed to load settings:', err));
+            .catch((err) => console.error('Không thể tải cài đặt:', err));
     }, []);
 
     return (
@@ -134,7 +134,7 @@ export function Footer() {
                 <div className="mt-12 pt-8 border-t border-border/40">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-sm text-muted-foreground">
-                            © {currentYear} Software by {settings?.author || 'SIEUTHI.CODE.VN'}. All rights reserved.
+                            © {currentYear} Bản quyền thuộc về {settings?.author || 'SIEUTHI.CODE.VN'}. Đã đăng ký bản quyền.
                         </p>
                         <div className="flex items-center gap-6">
                             <Link

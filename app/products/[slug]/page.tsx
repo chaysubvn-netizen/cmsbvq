@@ -2,6 +2,7 @@ import { api } from "@/lib/api";
 import { Metadata } from "next";
 import ProductDetailClient from "./ProductDetailClient";
 import { use } from "react";
+import { getImageUrl } from "@/lib/image-helper";
 
 // Required for static export
 export const revalidate = 60; // Revalidate at most every 60 seconds
@@ -28,16 +29,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const res = await api.products.get(slug);
     const product = (res as any).data || res;
 
-    // Get product image
-    let productImage = product.images?.[0] || product.image || product.list_images?.[0];
-
-    // Convert to full URL if needed
-    if (productImage && !productImage.startsWith('http')) {
-      productImage = `https://cmsbvq.top${productImage}`;
-    }
-
-    // Fallback to default OG image
-    const ogImage = productImage || `${siteUrl}/og-image.png`;
+    // Get product images (could be string, array, or CSV)
+    const rawImage = product.image || product.images || product.list_images;
+    const ogImage = getImageUrl(rawImage);
 
     const title = `${product.name} - CMSBVQ.COM`;
     const description = product.description || product.content || `Mua ${product.name} chất lượng cao tại CMSBVQ.COM`;

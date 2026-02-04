@@ -42,13 +42,13 @@ export default function HistoryPage() {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white mb-2">Order History</h1>
-                    <p className="text-muted-foreground">Manage and download your purchased source code.</p>
+                    <h1 className="text-2xl font-bold text-white mb-2">Lịch sử đơn hàng</h1>
+                    <p className="text-muted-foreground">Quản lý và tải về mã nguồn đã mua của bạn.</p>
                 </div>
                 <div className="relative group max-w-xs w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <input
-                        placeholder="Search orders..."
+                        placeholder="Tìm kiếm đơn hàng..."
                         className="w-full pl-10 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                     />
                 </div>
@@ -58,12 +58,12 @@ export default function HistoryPage() {
                 <Table>
                     <TableHeader className="bg-white/5">
                         <TableRow className="border-white/5 hover:bg-transparent">
-                            <TableHead className="text-white">Order ID</TableHead>
-                            <TableHead className="text-white">Product</TableHead>
-                            <TableHead className="text-white">Price</TableHead>
-                            <TableHead className="text-white">Date</TableHead>
+                            <TableHead className="text-white">Mã đơn hàng</TableHead>
+                            <TableHead className="text-white">Sản phẩm</TableHead>
+                            <TableHead className="text-white">Giá</TableHead>
+                            <TableHead className="text-white">Ngày mua</TableHead>
 
-                            <TableHead className="text-right text-white">Action</TableHead>
+                            <TableHead className="text-right text-white">Thao tác</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -76,7 +76,7 @@ export default function HistoryPage() {
                                     <TableCell className="font-medium text-white">
                                         <div className="flex flex-col">
                                             <span>{order.product_name}</span>
-                                            <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Digital product</span>
+                                            <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Sản phẩm kỹ thuật số</span>
                                         </div>
                                     </TableCell>
                                     <TableCell>
@@ -93,11 +93,11 @@ export default function HistoryPage() {
                                             <Button size="sm" className="h-8 bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/40" asChild>
                                                 {order.link_download ? (
                                                     <a href={order.link_download} target="_blank" rel="noopener noreferrer">
-                                                        <Download className="w-3.5 h-3.5 mr-1" /> Download
+                                                        <Download className="w-3.5 h-3.5 mr-1" /> Tải về
                                                     </a>
                                                 ) : (
                                                     <button disabled className="opacity-50 cursor-not-allowed">
-                                                        <Download className="w-3.5 h-3.5 mr-1" /> Download
+                                                        <Download className="w-3.5 h-3.5 mr-1" /> Tải về
                                                     </button>
                                                 )}
                                             </Button>
@@ -110,8 +110,8 @@ export default function HistoryPage() {
                                 <TableCell colSpan={6} className="h-48 text-center text-muted-foreground">
                                     <div className="flex flex-col items-center gap-2">
                                         <ShoppingBag className="w-8 h-8 opacity-20" />
-                                        <p>You haven't purchased any code yet.</p>
-                                        <Link href="/products" className="text-primary hover:underline text-sm font-medium">Browse products now</Link>
+                                        <p>Bạn chưa mua bất kỳ mã nguồn nào.</p>
+                                        <Link href="/products" className="text-primary hover:underline text-sm font-medium">Khám phá sản phẩm ngay</Link>
                                     </div>
                                 </TableCell>
                             </TableRow>

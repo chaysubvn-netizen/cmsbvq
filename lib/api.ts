@@ -45,7 +45,7 @@ async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promi
     });
 
     if (!res.ok) {
-        let errorMsg = `API Error: ${res.status} ${res.statusText}`;
+        let errorMsg = `Lỗi hệ thống: ${res.status} ${res.statusText}`;
         try {
             const errorData = await res.json();
             errorMsg = errorData.msg || errorData.message || errorMsg;
@@ -66,7 +66,7 @@ async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promi
             }
             return JSON.parse(textBlob);
         } catch (e) {
-            console.error('Failed to parse JSON response:', textBlob);
+            console.error('Không thể phân tích phản hồi JSON:', textBlob);
             return textBlob as unknown as T;
         }
     }

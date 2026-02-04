@@ -22,7 +22,7 @@ const normalizeProduct = (data: any) => {
     if (!data) return null;
     return {
         ...data,
-        image: data.images || data.image || data.list_images,
+        image: data.image || data.images || data.list_images || data.list_image,
         views: data.view || data.views,
         price: Number(data.price),
         old_price: Number(data.old_price || 0)
@@ -43,7 +43,7 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
                     setProduct(normalizeProduct(data));
                 })
                 .catch(() => {
-                    toast.error("Product not found");
+                    toast.error("Không tìm thấy sản phẩm");
                     router.push("/products");
                 })
                 .finally(() => setLoading(false));
@@ -55,10 +55,10 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
         setBuying(true);
         try {
             await api.user.buy(product.id as number);
-            toast.success("Purchase successful!");
+            toast.success("Mua hàng thành công!");
             router.push("/dashboard/history");
         } catch (error) {
-            toast.error("Purchase failed. Please check your balance.");
+            toast.error("Mua hàng thất bại. Vui lòng kiểm tra số dư.");
             if ((error as any).message?.includes("Unauthorized")) {
                 router.push("/auth/login");
             }
@@ -68,7 +68,7 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
     };
 
     if (loading) {
-        return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
+        return <div className="min-h-screen bg-black text-white flex items-center justify-center">Đang tải...</div>;
     }
 
     if (!product) return null;
@@ -80,23 +80,20 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
 
                     {/* LEFT COLUMN */}
                     <div className="lg:col-span-2 space-y-8">
-                        {/* Gradient Image Presentation */}
-                        <div className="rounded-3xl p-8 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 relative overflow-hidden shadow-2xl">
-                            <div className="absolute top-4 left-4">
+                        {/* Full Image Presentation */}
+                        <div className="rounded-3xl overflow-hidden bg-[#0f1115] border border-white/10 shadow-2xl relative group">
+                            <div className="absolute top-4 left-4 z-10">
                                 <div className="bg-red-500 text-white rounded-full p-2 shadow-lg">
                                     <Zap className="w-5 h-5 fill-white" />
                                 </div>
                             </div>
 
-                            {/* Laptop Frame Effect */}
-                            <div className="relative mx-auto bg-black rounded-t-xl border-4 border-black border-b-0 shadow-2xl transform translate-y-4 max-w-2xl">
-                                <div className="bg-black rounded-t-lg overflow-hidden aspect-video">
-                                    <img
-                                        src={getImageUrl(product.image as string)}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
+                            <div className="aspect-video w-full overflow-hidden">
+                                <img
+                                    src={getImageUrl(product.image as string)}
+                                    alt={product.name}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
                             </div>
                         </div>
 
@@ -146,7 +143,7 @@ export default function ProductDetailClient({ slug, initialProduct }: ProductDet
 
                                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                                     <UserIcon className="w-4 h-4" />
-                                    <span>Bởi {product.username || 'Quyetcoder2k3'}</span>
+                                    <span>Bởi {product.username || 'Admin'}</span>
                                     <div className="flex text-yellow-500 ml-auto">
                                         <Star className="w-3 h-3 fill-current" />
                                         <Star className="w-3 h-3 fill-current" />

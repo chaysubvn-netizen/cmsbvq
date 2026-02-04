@@ -16,11 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Menu, Search, Bell, ShoppingCart,
-  LogOut, User as UserIcon, Wallet,
-  ChevronDown,
-  LayoutDashboard,
-  Key
+    Menu, Search, Bell, ShoppingCart,
+    LogOut, User as UserIcon, Wallet,
+    ChevronDown,
+    LayoutDashboard,
+    Key
 } from "lucide-react";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -113,7 +113,7 @@ export function Header() {
                 <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-md mx-4 relative group">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <Input
-                        placeholder="Search for source code..."
+                        placeholder="Tìm kiếm mã nguồn..."
                         className="pl-9 bg-secondary/50 border-white/5 focus-visible:ring-primary/50 rounded-full"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -142,104 +142,104 @@ export function Header() {
                                     {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(user.balance || 0))}
                                 </span>
                             </div> */}
-                           <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button
-      variant="ghost"
-      className="relative h-9 w-9 rounded-full p-0 overflow-hidden"
-    >
-      <Avatar className="h-9 w-9">
-        <AvatarImage src={user.avatar || "https://sieuthicode.net/avatars/01.png"} />
-        <AvatarFallback>
-          {user.username?.[0]?.toUpperCase()}
-        </AvatarFallback>
-      </Avatar>
-    </Button>
-  </DropdownMenuTrigger>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="relative h-9 w-9 rounded-full p-0 overflow-hidden"
+                                    >
+                                        <Avatar className="h-9 w-9">
+                                            <AvatarImage src={user.avatar || "https://sieuthicode.net/avatars/01.png"} />
+                                            <AvatarFallback>
+                                                {user.username?.[0]?.toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </Button>
+                                </DropdownMenuTrigger>
 
-  <DropdownMenuContent
-    align="end"
-    className="w-64 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-  >
-    {/* Header */}
-    <div className="px-3 py-2">
-      <p className="text-sm font-medium">{user.username}</p>
-      <p className="text-xs text-zinc-400">{user.email}</p>
-    </div>
+                                <DropdownMenuContent
+                                    align="end"
+                                    className="w-64 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
+                                >
+                                    {/* Header */}
+                                    <div className="px-3 py-2">
+                                        <p className="text-sm font-medium">{user.username}</p>
+                                        <p className="text-xs text-zinc-400">{user.email}</p>
+                                    </div>
 
-    <DropdownMenuSeparator className="bg-zinc-800" />
+                                    <DropdownMenuSeparator className="bg-zinc-800" />
 
-    {/* Balance */}
-    <div className="px-3 py-2 flex items-center justify-between">
-<div className="flex items-center gap-2">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="lucide lucide-wallet h-3.5 w-3.5 text-zinc-400"
-    aria-hidden="true"
-  >
-    <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
-    <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
-  </svg>
+                                    {/* Balance */}
+                                    <div className="px-3 py-2 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="lucide lucide-wallet h-3.5 w-3.5 text-zinc-400"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+                                                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+                                            </svg>
 
-  <span className="text-xs text-zinc-500 dark:text-zinc-400">
-    Số dư
-  </span>
-</div>
-      <span className="text-sm font-semibold text-blue-400">
-        {user.balance?.toLocaleString()} đ
-      </span>
-    </div>
+                                            <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                                                Số dư
+                                            </span>
+                                        </div>
+                                        <span className="text-sm font-semibold text-blue-400">
+                                            {user.balance?.toLocaleString()} đ
+                                        </span>
+                                    </div>
 
-    <DropdownMenuSeparator className="bg-zinc-800" />
+                                    <DropdownMenuSeparator className="bg-zinc-800" />
 
-    {/* Menu */}
-    <DropdownMenuItem asChild>
-      <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
-        <LayoutDashboard className="h-4 w-4" />
-        Bảng điều khiển
-      </Link>
-    </DropdownMenuItem>
-
-   
-
-    <DropdownMenuItem asChild>
-      <Link href="/dashboard/deposit" className="flex items-center gap-2 cursor-pointer">
-        <Wallet className="h-4 w-4" />
-        Nạp tiền
-      </Link>
-    </DropdownMenuItem>
+                                    {/* Menu */}
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
+                                            <LayoutDashboard className="h-4 w-4" />
+                                            Bảng điều khiển
+                                        </Link>
+                                    </DropdownMenuItem>
 
 
-    <DropdownMenuSeparator className="bg-zinc-800" />
 
-    {/* Logout */}
-    <DropdownMenuItem
-      onClick={() => {
-        api.auth.logout()
-        window.location.reload()
-      }}
-      className="text-red-500 cursor-pointer"
-    >
-      <LogOut className="mr-2 h-4 w-4" />
-      Đăng xuất
-    </DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard/deposit" className="flex items-center gap-2 cursor-pointer">
+                                            <Wallet className="h-4 w-4" />
+                                            Nạp tiền
+                                        </Link>
+                                    </DropdownMenuItem>
+
+
+                                    <DropdownMenuSeparator className="bg-zinc-800" />
+
+                                    {/* Logout */}
+                                    <DropdownMenuItem
+                                        onClick={() => {
+                                            api.auth.logout()
+                                            window.location.reload()
+                                        }}
+                                        className="text-red-500 cursor-pointer"
+                                    >
+                                        <LogOut className="mr-2 h-4 w-4" />
+                                        Đăng xuất
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                     ) : (
                         <div className="flex items-center gap-2">
-                           <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_15px_-3px_var(--color-primary)] transition-all" asChild>
+                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_15px_-3px_var(--color-primary)] transition-all" asChild>
                                 <Link href="/auth/login">Đăng Nhập</Link>
                             </Button>
-                           
+
                         </div>
                     )}
                 </div>
@@ -255,15 +255,15 @@ function NavLinks({ isMobile = false }: { isMobile?: boolean }) {
     return (
         <>
             <Link href="/" className={`${baseClass} ${mobileClass} ${!isMobile && 'text-foreground'}`}>
-                Home
+                Trang chủ
             </Link>
             <Link href="/products" className={`${baseClass} ${mobileClass}`}>
-                Products
+                Sản phẩm
             </Link>
 
             <DropdownMenu>
                 <DropdownMenuTrigger className={`${baseClass} ${mobileClass}`}>
-                    Services <ChevronDown className="h-4 w-4" />
+                    Dịch vụ <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-black border-white/10">
                     <DropdownMenuItem asChild>
@@ -280,7 +280,7 @@ function NavLinks({ isMobile = false }: { isMobile?: boolean }) {
             </DropdownMenu>
 
             <Link href="/dashboard/deposit" className={`${baseClass} ${mobileClass}`}>
-                Deposit
+                Nạp tiền
             </Link>
         </>
     );

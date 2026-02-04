@@ -30,10 +30,10 @@ export default function RegisterPage() {
 
         try {
             await api.auth.register(formData);
-            toast.success("Registration successful! Please login.");
+            toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
             router.push("/auth/login");
         } catch (error) {
-            toast.error("Registration failed. Username or Email may already exist.");
+            toast.error("Đăng ký thất bại. Tên đăng nhập hoặc Email có thể đã tồn tại.");
         } finally {
             setIsLoading(false);
         }
@@ -43,19 +43,19 @@ export default function RegisterPage() {
         <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-muted/30 p-4">
             <Card className="w-full max-w-md">
                 <CardHeader className="space-y-1">
-                    <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+                    <CardTitle className="text-2xl font-bold">Tạo tài khoản</CardTitle>
                     <CardDescription>
-                        Enter your email below to create your account
+                        Nhập thông tin bên dưới để tạo tài khoản của bạn
                     </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleRegister}>
-                 <CardContent className="space-y-6 pb-6">
+                    <CardContent className="space-y-6 pb-6">
 
                         <div className="space-y-2">
-                            <Label htmlFor="username">Username</Label>
+                            <Label htmlFor="username">Tên đăng nhập</Label>
                             <Input
                                 id="username"
-                                placeholder="johndoe"
+                                placeholder="Nhập tên đăng nhập"
                                 minLength={6}
                                 value={formData.username}
                                 onChange={handleChange}
@@ -74,7 +74,7 @@ export default function RegisterPage() {
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Mật khẩu</Label>
                             <Input
                                 id="password"
                                 type="password"
@@ -88,12 +88,12 @@ export default function RegisterPage() {
                     <CardFooter className="flex flex-col gap-4">
                         <Button className="w-full" type="submit" disabled={isLoading}>
                             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            Create account
+                            Đăng ký tài khoản
                         </Button>
                         <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{" "}
+                            Đã có tài khoản?{" "}
                             <Link href="/auth/login" className="text-primary hover:underline font-medium">
-                                Login
+                                Đăng nhập
                             </Link>
                         </div>
                     </CardFooter>

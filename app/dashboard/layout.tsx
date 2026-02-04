@@ -17,27 +17,27 @@ export default function DashboardLayout({
 
     const sidebarItems = [
         {
-            title: "Profile Information",
+            title: "Thông tin cá nhân",
             href: "/dashboard",
             icon: User,
         },
         {
-            title: "Deposit Money",
+            title: "Nạp tiền",
             href: "/dashboard/deposit",
             icon: Wallet,
         },
         {
-            title: "Deposit History",
+            title: "Lịch sử nạp tiền",
             href: "/dashboard/balance",
             icon: History,
         },
         {
-            title: "Order History",
+            title: "Lịch sử đơn hàng",
             href: "/dashboard/history",
             icon: ShoppingBag,
         },
         {
-            title: "My Cronjobs",
+            title: "Quản lý Cronjob",
             href: "/dashboard/cron",
             icon: Terminal,
         },
@@ -60,7 +60,7 @@ export default function DashboardLayout({
                 <div className="lg:col-span-1">
                     <div className="bg-[#0f1115] border border-white/10 rounded-2xl overflow-hidden sticky top-24">
                         <div className="p-4 bg-white/5 border-b border-white/5">
-                            <h2 className="font-bold text-lg text-white">My Dashboard</h2>
+                            <h2 className="font-bold text-lg text-white">Bảng điều khiển</h2>
                         </div>
                         <nav className="p-2 space-y-1">
                             {sidebarItems.map((item) => (
@@ -84,7 +84,7 @@ export default function DashboardLayout({
                                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm text-red-400 hover:bg-red-500/10 hover:text-red-500"
                             >
                                 <LogOut className="w-4 h-4" />
-                                Logout
+                                Đăng xuất
                             </button>
                         </nav>
                     </div>
