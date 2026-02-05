@@ -91,10 +91,6 @@ export default function Home() {
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="max-w-4xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom duration-1000">
-            <Badge className="bg-blue-600/10 text-blue-400 border-blue-500/20 px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest">
-             Tự động hóa quy trình kiếm tiền online của bạn
-            </Badge>
-
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.2] text-white">
               Giải pháp công nghệ <br />
               <span className="text-gradient-animated uppercase inline-block mt-2">Đột phá & Toàn diện.</span>
